@@ -1,5 +1,10 @@
 ﻿@model List<Foto>
 
+
+
+<div>
+    <input type="text" id="searchInput" name="search" value="" placeholder="Ricerca foto" />
+</div>
 <div class="col">
     <div><a href="@Url.Action("Create", "Foto")">Crea</a></div>
 </div>
@@ -7,15 +12,15 @@
 
 @foreach (var foto in Model)
 {
-    <div class="row">
+    <div class="row MyFoto">
         <div class="col">
-            <h3>@foto.Titolo</h3>
+            <h3 class="filter-text">@foto.Titolo</h3>
         </div>
         <div class="col">
-            <div><a href="@Url.Action("Show", "Foto", new {id = foto.Id})">Dettagli</a></div>
+            <div><a href="@Url.Action("Show", "Foto", new { id = foto.Id })">Dettagli</a></div>
         </div>
         <div class="col">
-            <div><a href="@Url.Action("Update", "Foto", new {id = foto.Id})">Modifica</a></div>
+            <div><a href="@Url.Action("Update", "Foto", new { id = foto.Id })">Modifica</a></div>
         </div>
         <div class="col">
             <form asp-controller="Foto" asp-action="Delete" asp-route-id="@foto.Id" method="post">
@@ -25,6 +30,24 @@
                 </button>
             </form>
         </div>
-
     </div>
 }
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keyup', function () {
+            var filter = this.value.toLowerCase();
+            var foto = document.querySelectorAll('.MyFoto');
+
+            foto.forEach(function (foto) {
+                var title = foto.querySelector('.filter-text').innerText.toLowerCase();
+                if (title.includes(filter)) {
+                    foto.classList.remove('d-none');
+                } else {
+                    foto.classList.add('d-none');
+                }
+            });
+        });
+    });
+</script>

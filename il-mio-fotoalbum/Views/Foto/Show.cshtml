@@ -2,7 +2,7 @@
 @model Foto
 
 <div class="row">
-    <div class="col">@Model.Descrizione</div>
+    <div class="col">@Model.Titolo</div>
     <div class="col">
         @if (Model.ImgSrc != null)
         {
@@ -15,7 +15,7 @@
             <h3>La foto è null</h3>
         } 
     </div>
-    <div class="col">@Model.Titolo</div>
+    <div class="col">@Model.Descrizione</div>
     <div class="col">@Model.Visibile</div>
     <div style="display: flex; flex-wrap: wrap; gap: 5px;">
         @if(Model.Categorias != null)
