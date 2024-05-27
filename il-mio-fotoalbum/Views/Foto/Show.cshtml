@@ -4,13 +4,15 @@
 <div class="row">
     <div class="col">@Model.Descrizione</div>
     <div class="col">
-        @if (Model.Immagine == null)
+        @if (Model.ImgSrc != null)
         {
-            <h6>Questa foto è null</h6>
+            <div class="img">
+                <img src="@Model.ImgSrc" />
+            </div>
         }
         else
         {
-            <img src="@Model.Immagine" alt="@Model.Titolo" />
+            <h3>La foto è null</h3>
         } 
     </div>
     <div class="col">@Model.Titolo</div>
@@ -29,3 +31,10 @@
         }
     </div>
 </div>
+
+
+<style>
+    .img{
+        width: 80px;
+    }
+</style>

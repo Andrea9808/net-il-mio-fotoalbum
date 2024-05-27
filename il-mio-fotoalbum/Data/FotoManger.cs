@@ -64,6 +64,55 @@ namespace il_mio_fotoalbum.Data
             db.SaveChanges();
         }
 
+        //MODIFICA FOTO
+        public static bool UpdateFoto(int id, string titolo, string descrizione, byte[] immagine, List<string> categorie )
+        {
+            using FotoContext db = new FotoContext();
+
+            var fotoDaModificare = db.Fotos.Where(x => x.Id == id).Include(x => x.Categorias).FirstOrDefault();
+
+            if(fotoDaModificare == null)
+            {
+                return false;
+            }
+
+            fotoDaModificare.Titolo = titolo;
+            fotoDaModificare.Descrizione = descrizione;
+            fotoDaModificare.Immagine = immagine;
+
+            fotoDaModificare.Categorias.Clear();
+            if(categorie != null)
+            {
+                foreach (var categoria in categorie)
+                {
+                    int idCategoria = int.Parse(categoria);
+                    var categoriaDaAggiungere = db.Categorias.FirstOrDefault(x => x.Id == idCategoria);
+                    fotoDaModificare.Categorias.Add(categoriaDaAggiungere);
+                }
+            }
+
+            db.SaveChanges();
+            return true;
+        }
+
+
+        //ELIMINA FOTO
+        public static bool DeleteFoto(int id)
+        {
+            using FotoContext db = new FotoContext();
+            var fotoDaEliminare = db.Fotos.FirstOrDefault(x => x.Id == id);
+
+            if (fotoDaEliminare == null)
+            {
+                return false;
+            }
+
+            db.Fotos.Remove(fotoDaEliminare);
+            db.SaveChanges();
+
+            return true;
+        }
+
 
         //SOLO PER GENERARE DATI FAKE PER VEDERE SE TUTTO FUNZIONA
         //COUNT FOTO

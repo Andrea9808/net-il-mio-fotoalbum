@@ -8,8 +8,9 @@ namespace il_mio_fotoalbum.Models
         public Foto Foto { get; set; }
         public List<SelectListItem>? Categorie { get; set; }
         public List <string>? SelectCategorie { get; set; }
+        public IFormFile? ImmagineFile { get; set; }
 
-       
+
 
         public FotoFormModel() { }
         public FotoFormModel(Foto foto)
@@ -37,6 +38,20 @@ namespace il_mio_fotoalbum.Models
                     this.SelectCategorie.Add(categoria.Id.ToString());
                 }
             }
+        }
+
+        public byte[] SetImmagine()
+        {
+            if(ImmagineFile == null)
+            {
+                return null;
+            }
+
+            using var stream = new MemoryStream();
+            this.ImmagineFile?.CopyTo(stream);
+            Foto.Immagine = stream.ToArray();
+
+            return Foto.Immagine;
         }
     }
 
