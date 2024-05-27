@@ -80,7 +80,7 @@ namespace il_mio_fotoalbum.Controllers
             }
 
             data.SetImmagine();
-            if (FotoManger.UpdateFoto(id, data.Foto.Titolo, data.Foto.Descrizione, data.Foto.Immagine, data.SelectCategorie))
+            if (FotoManger.UpdateFoto(id, data.Foto.Titolo, data.Foto.Descrizione, data.Foto.Visibile, data.Foto.Immagine, data.SelectCategorie))
             {
                 return RedirectToAction("Index");
             }

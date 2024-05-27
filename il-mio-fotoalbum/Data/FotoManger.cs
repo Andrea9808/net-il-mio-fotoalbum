@@ -65,7 +65,7 @@ namespace il_mio_fotoalbum.Data
         }
 
         //MODIFICA FOTO
-        public static bool UpdateFoto(int id, string titolo, string descrizione, byte[] immagine, List<string> categorie )
+        public static bool UpdateFoto(int id, string titolo, string descrizione, bool visibile, byte[] immagine, List<string> categorie )
         {
             using FotoContext db = new FotoContext();
 
@@ -79,6 +79,8 @@ namespace il_mio_fotoalbum.Data
             fotoDaModificare.Titolo = titolo;
             fotoDaModificare.Descrizione = descrizione;
             fotoDaModificare.Immagine = immagine;
+            fotoDaModificare.Visibile = visibile;
+
 
             fotoDaModificare.Categorias.Clear();
             if(categorie != null)

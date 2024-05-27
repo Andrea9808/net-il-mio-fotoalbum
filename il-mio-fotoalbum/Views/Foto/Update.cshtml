@@ -7,17 +7,26 @@
         <div class="mb-3">
             <strong>Titolo:</strong>
             <input asp-for="Foto.Titolo" class="d-block w-100" />
+            <span asp-validation-for="Foto.Titolo" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <strong>Descrizione:</strong>
             <input asp-for="Foto.Descrizione" class="d-block w-100 is-invalid" />
+            <span asp-validation-for="Foto.Descrizione" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <strong>Visibilità:</strong>
+            <input class="text-start" asp-for="Foto.Visibile" />
+            <span asp-validation-for="Foto.Visibile" class="text-danger"></span>
         </div>
 
         <div class="form-field">
             <img src="@Model.Foto.ImgSrc">
-            <label asp-for="ImmagineFile">Image file</label>
+            <label asp-for="ImmagineFile">Immagine:</label>
             <input type="file" asp-for="ImmagineFile" />
         </div>
+
 
         <div class="mb-3">
             <strong>Categorie:</strong>

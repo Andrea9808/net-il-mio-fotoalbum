@@ -10,9 +10,13 @@ namespace il_mio_fotoalbum.Models
         [Key]public int Id { get; set; }
 
         [Column("titolo")]
+        [Required(ErrorMessage = "Il campo Titolo è obbligatorio")]
+        [StringLength(25, ErrorMessage = "Il Titolo non può avere più di 25 caratteri")]
         public string Titolo { get; set; }
 
         [Column("descrizione")]
+        [Required(ErrorMessage = "Il campo Descrizione è obbligatorio")]
+        [StringLength(25, ErrorMessage = "La Descrizione non può avere più di 50 caratteri")]
         public string Descrizione { get; set; }
 
         [Column("immagine")]

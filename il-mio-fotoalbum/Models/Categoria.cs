@@ -9,6 +9,7 @@ namespace il_mio_fotoalbum.Models
         [Key]public int Id { get; set; }
 
         [Column("nome")]
+
         public string Nome { get; set; }
 
         // * to *
