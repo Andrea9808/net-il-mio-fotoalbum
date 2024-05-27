@@ -12,7 +12,7 @@ namespace il_mio_fotoalbum.Models
         public string Nome { get; set; }
 
         // * to *
-        public List<Foto> Fotos { get; set; }
+        public List<Foto>? Fotos { get; set; }
 
         public Categoria() { }
 

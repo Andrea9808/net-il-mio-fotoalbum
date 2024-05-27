@@ -23,7 +23,7 @@ namespace il_mio_fotoalbum.Models
         public bool Visibile { get; set; }
 
         // * to *
-        public List<Categoria> Categorias { get; set; }
+        public List<Categoria>? Categorias { get; set; }
         public Foto() { }
 
         public Foto(string titolo, string descrizione, byte[] immagine, bool visibile)
