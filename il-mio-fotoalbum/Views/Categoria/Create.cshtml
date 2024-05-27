@@ -1,0 +1,17 @@
+﻿@model Categoria
+
+<div class="container">
+    <form asp-controller="Categoria" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <strong>Nome:</strong>
+            <input asp-for="@Model.Nome" class="d-block w-100" />
+            <span asp-validation-for="@Model.Nome" class="text-danger"></span>
+        </div>
+    
+
+        <div class="text-end">
+            <input type="submit" class="btn btn-small btn-info" value="Inserisci">
+        </div>
+    </form>
+</div>

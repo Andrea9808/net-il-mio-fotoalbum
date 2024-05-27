@@ -1,0 +1,18 @@
+﻿@model List<Categoria>
+ 
+<div class="col">
+    <a href="@Url.Action("Create", "Categoria")">Crea la categoria</a>
+</div>
+
+@foreach(var categoria in Model)
+{
+    <div class="row">
+        <div class="col">
+            <ul>
+                <li>
+                    <h3>@categoria.Nome</h3>
+                </li>
+            </ul>
+        </div>
+    </div>
+}

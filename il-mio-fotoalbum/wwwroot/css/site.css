@@ -16,3 +16,26 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.img {
+    width: 80px;
+}
+
+.green-dot {
+    width: 20px;
+    height: 20px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+
+
+.green-red {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+}

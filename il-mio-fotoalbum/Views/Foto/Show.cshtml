@@ -12,11 +12,20 @@
         }
         else
         {
-            <h3>La foto è null</h3>
+            <h3>La foto non è disponibile</h3>
         } 
     </div>
     <div class="col">@Model.Descrizione</div>
-    <div class="col">@Model.Visibile</div>
+    <div class="col">
+        @if(Model.Visibile)
+        {
+            <div class="green-dot"></div>
+        }
+        else
+        {
+            <div class="green-red"></div>
+        }
+    </div>
     <div style="display: flex; flex-wrap: wrap; gap: 5px;">
         @if(Model.Categorias != null)
         {
@@ -32,9 +41,3 @@
     </div>
 </div>
 
-
-<style>
-    .img{
-        width: 80px;
-    }
-</style>
