@@ -1,0 +1,33 @@
+﻿@model FotoFormModel
+
+
+<div class="container">
+    <form asp-controller="Foto" asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <strong>Titolo:</strong>
+            <input asp-for="Foto.Titolo" class="d-block w-100" />
+        </div>
+        <div class="mb-3">
+            <strong>Descrizione:</strong>
+            <input asp-for="Foto.Descrizione" class="d-block w-100 is-invalid" />
+        </div>
+    
+        <div class="mb-3">
+            <strong>Categorie:</strong>
+     
+            @for (int i = 0; i < Model.Categorie.Count; i++)
+            {
+                <div>
+                    <input type="checkbox" name="SelectCategorie" value="@Model.Categorie[i].Value"
+                    @(Model.SelectCategorie.Contains(Model.Categorie[i].Value) ? "checked" : "") />
+                    @Model.Categorie[i].Text
+                </div>
+            }
+        </div>
+        
+        <div class="text-end">
+            <input type="submit" class="btn btn-small btn-info" value="Inserisci">
+        </div>
+    </form>
+</div>

@@ -1,11 +1,22 @@
 ﻿@model List<Foto>
 
+<div class="col">
+    <div><a href="@Url.Action("Create", "Foto")">Crea</a></div>
+</div>
+
+
 @foreach (var foto in Model)
 {
     <div class="row">
         <div class="col">
             <h3>@foto.Titolo</h3>
         </div>
+        <div class="col">
+            <div><a href="@Url.Action("Show", "Foto", new {id = foto.Id})">Dettagli</a></div>
+        </div>
+
+
+
         <div class="col">
             <h3>@foto.Descrizione</h3>
         </div>

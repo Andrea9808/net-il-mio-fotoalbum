@@ -1,27 +1,67 @@
 ﻿using il_mio_fotoalbum.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace il_mio_fotoalbum.Data
 {
     public class FotoManger
     {
+        //PRENDE LA LISTA DELLE FOTO DAL DB
+        public static List<Foto> GetAllFoto()
+        {
+            using FotoContext db = new FotoContext();
+            return db.Fotos.ToList();
+        }
 
-        //PRENDE LE FOTO DAL DATABASE
-        public static List<Foto> GetFoto()
+        //PRENDE LE FOTO TRAMITE ID
+        public static Foto GetFotoById(int id)
         {
             using (FotoContext db = new FotoContext())
             {
-                return db.Fotos.ToList();
+                return db.Fotos.Where(x => x.Id == id).FirstOrDefault();
+            }  
+        }
+
+        //PRENDE LE FOTO DAL DATABASE
+        public static Foto GetFoto(int id, bool includeReferences = true)
+        {
+            using FotoContext db = new FotoContext();
+            if(includeReferences)
+            {
+                return db.Fotos.Where(x => x.Id == id).Include(x => x.Categorias).FirstOrDefault();
+            }
+
+            return db.Fotos.FirstOrDefault(x => x.Id == id);
+
+        }
+
+        //PRENDE TUTTE LE CATEGORIE
+        public static List<Categoria> GetCategorie()
+        {
+            using (FotoContext db = new FotoContext())
+            {
+                return db.Categorias.ToList();
             }
         }
 
         //INSERISCI FOTO
-        public static void InsertFoto(Foto foto)
+        public static void InsertFoto(Foto foto, List<string> SelectCategorie = null)
         {
-            using (FotoContext db = new FotoContext())
+            using FotoContext db = new FotoContext();
+
+            if(SelectCategorie != null)
             {
-                db.Fotos.Add(foto);
-                db.SaveChanges();
+                foto.Categorias = new List<Categoria>();
+
+                foreach (var CategoriaId in SelectCategorie)
+                {
+                   int id = int.Parse(CategoriaId);
+                   var categoria = db.Categorias.FirstOrDefault(x => x.Id == id);
+                   foto.Categorias.Add(categoria);
+                }
             }
+
+            db.Fotos.Add(foto);
+            db.SaveChanges();
         }
 
 

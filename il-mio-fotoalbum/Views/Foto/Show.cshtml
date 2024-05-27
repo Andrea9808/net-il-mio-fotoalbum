@@ -1,0 +1,31 @@
+﻿@using il_mio_fotoalbum.Data;
+@model Foto
+
+<div class="row">
+    <div class="col">@Model.Descrizione</div>
+    <div class="col">
+        @if (Model.Immagine == null)
+        {
+            <h6>Questa foto è null</h6>
+        }
+        else
+        {
+            <img src="@Model.Immagine" alt="@Model.Titolo" />
+        } 
+    </div>
+    <div class="col">@Model.Titolo</div>
+    <div class="col">@Model.Visibile</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+        @if(Model.Categorias != null)
+        {
+            @foreach (var categoria in Model.Categorias)
+            {
+                <div class="badge bg-primary">@categoria.Nome</div>
+            }
+        }
+        else
+        {
+            <h6>Nessuna categoria selezionata</h6>
+        }
+    </div>
+</div>
