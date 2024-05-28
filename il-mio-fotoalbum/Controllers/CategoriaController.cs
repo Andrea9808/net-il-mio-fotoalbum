@@ -31,5 +31,13 @@ namespace il_mio_fotoalbum.Controllers
             CategoriaManager.InsertCategoria(categoria);
             return RedirectToAction("Index");
         }
+
+        //DELETE
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            CategoriaManager.DeleteCategoria(id);
+            return RedirectToAction("Index");
+        }
     }
 }
