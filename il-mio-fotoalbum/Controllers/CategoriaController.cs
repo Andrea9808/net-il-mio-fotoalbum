@@ -1,5 +1,6 @@
 ﻿using il_mio_fotoalbum.Data;
 using il_mio_fotoalbum.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace il_mio_fotoalbum.Controllers
@@ -8,6 +9,7 @@ namespace il_mio_fotoalbum.Controllers
     {
 
         //INDEX
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Index()
         {
            return View(FotoManger.GetCategorie());
@@ -15,11 +17,14 @@ namespace il_mio_fotoalbum.Controllers
 
 
         //CREATE
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Create()
         {
             return View();
         }
 
+        
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public IActionResult Create(Categoria categoria)
         {
@@ -33,6 +38,7 @@ namespace il_mio_fotoalbum.Controllers
         }
 
         //DELETE
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public IActionResult Delete(int id)
         {

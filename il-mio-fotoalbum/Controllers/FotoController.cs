@@ -1,5 +1,6 @@
 ﻿using il_mio_fotoalbum.Data;
 using il_mio_fotoalbum.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace il_mio_fotoalbum.Controllers
@@ -8,6 +9,7 @@ namespace il_mio_fotoalbum.Controllers
     {
 
         //INDEX
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Index()
         {
             return View(FotoManger.GetAllFoto());
@@ -15,6 +17,7 @@ namespace il_mio_fotoalbum.Controllers
 
 
         //SHOW
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Show(int id)
         {
             var foto = FotoManger.GetFoto(id);
@@ -27,6 +30,7 @@ namespace il_mio_fotoalbum.Controllers
         }
 
         //CREATE
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Create()
         {
             FotoFormModel model = new FotoFormModel();
@@ -37,6 +41,7 @@ namespace il_mio_fotoalbum.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Create(FotoFormModel data)
         {
             if (!ModelState.IsValid)
@@ -52,6 +57,7 @@ namespace il_mio_fotoalbum.Controllers
 
 
         //EDIT
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Update(int id)
         {
             var FotoDaModificare = FotoManger.GetFoto(id);
@@ -71,6 +77,7 @@ namespace il_mio_fotoalbum.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Update(int id, FotoFormModel data)
         {
             if(!ModelState.IsValid)
@@ -94,6 +101,7 @@ namespace il_mio_fotoalbum.Controllers
         //DELETE
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "ADMIN")]
         public IActionResult Delete(int id)
         {
             if (FotoManger.DeleteFoto(id))

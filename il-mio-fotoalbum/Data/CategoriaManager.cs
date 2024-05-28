@@ -8,7 +8,7 @@ namespace il_mio_fotoalbum.Data
         //METODO PER INSERIRE UNA NUOVA CATEGORIA
         public static void InsertCategoria(Categoria categoria)
         {
-            using var db = new FotoContext();
+            using FotoContext db = new FotoContext();
             db.Categorias.Add(categoria);
             db.SaveChanges();
         }
@@ -16,7 +16,7 @@ namespace il_mio_fotoalbum.Data
         //METODO PER ELIMINARE UNA CATEGORIA
         public static void DeleteCategoria(int id)
         {
-            using var db = new FotoContext();
+            using FotoContext db = new FotoContext();
             var categoria = db.Categorias.Find(id);
             db.Categorias.Remove(categoria);
             db.SaveChanges();

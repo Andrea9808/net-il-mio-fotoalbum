@@ -9,7 +9,7 @@ namespace il_mio_fotoalbum.Data
         public static List<Foto> GetAllFoto()
         {
             using FotoContext db = new FotoContext();
-            return db.Fotos.ToList();
+            return db.Fotos.Include(f => f.Categorias).ToList();
         }
 
         //PRENDE LE FOTO TRAMITE ID

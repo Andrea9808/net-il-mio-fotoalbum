@@ -2,7 +2,72 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="foto d-none">
+                <div class="row foto-list">
+                </div>
+            </div>
+        </div>
+        <div class="row no_foto d-none">
+            <div class="col-12">
+                <h3>Non hai inserito alcuna foto</h3>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+
+    function GetAllFoto(nameFilter) {
+        axios.get('/api/FotoWebApi/GetAllFoto', {
+            params: {
+                nameFilter: nameFilter
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                var foto = response.data;
+                var fotoList = document.querySelector('.foto-list');
+                fotoList.innerHTML = '';
+                if (foto.length > 0) {
+                    document.querySelector('.foto').classList.remove('d-none');
+                    document.querySelector('.no_foto').classList.add('d-none');
+                    foto.forEach(function (foto) {
+                        var categoriasHtml = foto.categorias.map(function (categoria) {
+                            return `<span class="badge bg-primary">${categoria.nome}</span>`;
+                        }).join(' ');
+                        // Determina la classe per visibile
+                        var visibileClass = foto.visibile ? '' : 'd-none';
+                        var fotoItem = document.createElement('div');
+                        fotoItem.classList.add('col-12', 'col-md-6', 'col-lg-3', 'foto-card');
+                        fotoItem.innerHTML = `
+                               <div class="card ${visibileClass}" style="height: 254px">
+                                <a class="mb-4" href="/Foto/Show/${foto.id}">
+                                    <button class="a-index filter-text">${foto.titolo}</button>
+                                </a>
+                                <p>${categoriasHtml}</p>
+                                <div>
+                                    ${foto.visibile ? '<div class="green-dot"></div>' : '<div class="green-red"></div>'}
+                                </div>
+                            </div>
+                        `;
+                        fotoList.appendChild(fotoItem);
+                    });
+                } else {
+                    document.querySelector('.foto').classList.add('d-none');
+                    document.querySelector('.no_foto').classList.remove('d-none');
+                }
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+
+    GetAllFoto('');
+</script>
+

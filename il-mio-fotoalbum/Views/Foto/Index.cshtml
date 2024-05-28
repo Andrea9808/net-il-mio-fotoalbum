@@ -1,86 +1,95 @@
 ﻿@model List<Foto>
 
-
-<div class="container-fluid">
-    <div class="container">
-        <div class="title">
-            <h1>Le tue foto</h1>
-        </div>
-
-        <div class="input-search">
-            <input type="text" id="searchInput" name="search" value="" placeholder="Ricerca foto" />
-        </div>
-
-        <div class="input-generici">
-            <div class="d-flex my-4">
-                <a href="@Url.Action("Create", "Foto")">
-                    <button class="cssbuttons-io-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg>
-                        <span>Crea</span>
-                    </button>
-                </a>
-
-                <a class="mx-4" href="@Url.Action("Index", "Categoria")">
-                    <button class="cssbuttons-io-button">
-                        <span>Vai alla sezione categorie</span>
-                    </button>
-                </a>
-
+@if (User.IsInRole("ADMIN"))
+{
+    <div class="container-fluid">
+        <div class="container">
+            <div class="title">
+                <h1>Le tue foto</h1>
             </div>
-        </div>
 
-        <div class="row MyFoto">
-            @foreach (var foto in Model)
-            {
-                <div class="col-12 col-md-6 col-lg-3 foto-card">
-                    <div class="card" style="height: 254px">
-                        <a class="mb-4" href="@Url.Action("Show", "Foto", new { id = foto.Id })">
-                            <button class="a-index filter-text">@foto.Titolo</button>
-                        </a>
-                        <div>
-                            @if (foto.Visibile)
-                            {
-                                <div class="green-dot"></div>
-                            }
-                            else
-                            {
-                                <div class="green-red"></div>
-                            }
-                        </div>
-                        <div class="d-flex">
-                            <a href="@Url.Action("Update", "Foto", new { id = foto.Id })">
-                                <button class="btn-53 mx-3">
-                                    <div class="original">MODIFICA</div>
-                                    <div class="letters">
-                                        <span>M</span>
-                                        <span>O</span>
-                                        <span>D</span>
-                                        <span>I</span>
-                                        <span>F</span>
-                                        <span>I</span>
-                                        <span>C</span>
-                                        <span>A</span>
-                                    </div>
-                                </button>
+            <div class="input-search">
+                <input type="text" id="searchInput" name="search" value="" placeholder="Ricerca foto" />
+            </div>
+
+            <div class="input-generici">
+                <div class="d-flex my-4">
+                    <a href="@Url.Action("Create", "Foto")">
+                        <button class="cssbuttons-io-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg>
+                            <span>Crea</span>
+                        </button>
+                    </a>
+
+                    <a class="mx-4" href="@Url.Action("Index", "Categoria")">
+                        <button class="cssbuttons-io-button">
+                            <span>Vai alla sezione categorie</span>
+                        </button>
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="row MyFoto">
+                @foreach (var foto in Model)
+                {
+                    <div class="col-12 col-md-6 col-lg-3 foto-card">
+                        <div class="card" style="height: 254px">
+                            <a class="mb-4" href="@Url.Action("Show", "Foto", new { id = foto.Id })">
+                                <button class="a-index filter-text">@foto.Titolo</button>
                             </a>
-                        </div>
-                        <div>
-                            <form asp-controller="Foto" asp-action="Delete" asp-route-id="@foto.Id" method="post">
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-danger btn-sm my-3">
-                                    Elimina
-                                </button>
-                            </form>
+                            <div>
+                                @if (foto.Visibile)
+                                {
+                                    <div class="green-dot"></div>
+                                }
+                                else
+                                {
+                                    <div class="green-red"></div>
+                                }
+                            </div>
+                            <div class="d-flex">
+                                <a href="@Url.Action("Update", "Foto", new { id = foto.Id })">
+                                    <button class="btn-53 mx-3">
+                                        <div class="original">MODIFICA</div>
+                                        <div class="letters">
+                                            <span>M</span>
+                                            <span>O</span>
+                                            <span>D</span>
+                                            <span>I</span>
+                                            <span>F</span>
+                                            <span>I</span>
+                                            <span>C</span>
+                                            <span>A</span>
+                                        </div>
+                                    </button>
+                                </a>
+                            </div>
+                            <div>
+                                @if (User.IsInRole("ADMIN"))
+                                {
+                                    <p>
+                                        <form asp-controller="Foto" asp-action="Delete" asp-route-id="@foto.Id" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-danger btn-sm my-3">
+                                                Elimina
+                                            </button>
+                                        </form>
+                                    </p>
+                                }
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
+                }
+            </div>
 
+        </div>
     </div>
+    <div>
 </div>
-<div>
-</div>
+}
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -222,25 +231,6 @@
          transition-delay: 0.5s;
     }
 
-    /* STILE A-INDEX*/
-    .a-index {
-        outline: none;
-        color: #DAA06D;
-        padding: 1em;
-        padding-left: 3em;
-        padding-right: 3em;
-        border: 2px dashed #DAA06D;
-        border-radius: 15px;
-        background-color: #EADDCA;
-        box-shadow: 0 0 0 4px #EADDCA, 2px 2px 4px 2px rgba(0, 0, 0, 0.5);
-        transition: .1s ease-in-out, .4s color;
-    }
-
-       
-    .a-index:active {
-         transform: translateX(0.1em) translateY(0.1em);
-         box-shadow: 0 0 0 4px #EADDCA, 1.5px 1.5px 2.5px 1.5px rgba(0, 0, 0, 0.5);
-    }
 
 
     .cssbuttons-io-button {
