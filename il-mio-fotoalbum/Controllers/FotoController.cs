@@ -9,7 +9,7 @@ namespace il_mio_fotoalbum.Controllers
     {
 
         //INDEX
-        [Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN, USER")]
         public IActionResult Index()
         {
             return View(FotoManger.GetAllFoto());
@@ -17,7 +17,7 @@ namespace il_mio_fotoalbum.Controllers
 
 
         //SHOW
-        [Authorize(Roles = "ADMIN")]
+        [Authorize(Roles = "ADMIN, USER")]
         public IActionResult Show(int id)
         {
             var foto = FotoManger.GetFoto(id);

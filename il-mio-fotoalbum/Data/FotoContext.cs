@@ -9,6 +9,7 @@ namespace il_mio_fotoalbum.Data
     {
         public DbSet<Foto> Fotos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Messaggio> Messaggi { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

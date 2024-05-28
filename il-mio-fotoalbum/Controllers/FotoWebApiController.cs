@@ -1,4 +1,5 @@
 ﻿using il_mio_fotoalbum.Data;
+using il_mio_fotoalbum.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,15 @@ namespace il_mio_fotoalbum.Controllers
         public IActionResult GetAllFoto()
         {
             return Ok(FotoManger.GetAllFoto());
+        }
+
+
+        //............./api/FotoWebApi/CreaMessaggio/
+        [HttpPost]
+        public IActionResult CreaMessaggio([FromBody] Messaggio messaggio)
+        {
+            MessaggioManager.InsertMessaggio(messaggio);
+            return Ok();
         }
     }
 }

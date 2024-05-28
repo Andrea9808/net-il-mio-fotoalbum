@@ -4,9 +4,30 @@
 
 <div class="container-fluid">
     <div class="container">
+
+        <input id="searchInput" class="js_search form-control my-3" placeholder="Cerca per titolo" />
+        <!-- Form Messaggio -->
+        <form class="form" onsubmit="creaMessaggio(event)" method="post">
+            @Html.AntiForgeryToken()
+            <div class="mb-3">
+                <strong>Mittente:</strong>
+                <input id="MessaggioMittente" class="d-block w-100" />
+            </div>
+
+            <div class="mb-3">
+                <strong>Testo:</strong>
+                <input id="MessaggioTesto" type="text" class="d-block w-100" />
+            </div>
+
+            <div class="text-end">
+                <input type="submit" class="btn btn-small btn-info" value="Invia">
+            </div>
+        </form>
+        <!-- Fine Form -->
         <div class="row">
             <div class="foto d-none">
                 <div class="row foto-list">
+                    <!-- FOTO -->
                 </div>
             </div>
         </div>
@@ -22,6 +43,7 @@
 
 <script>
 
+    //Api GetAllFoto (per stampare i dati)
     function GetAllFoto(nameFilter) {
         axios.get('/api/FotoWebApi/GetAllFoto', {
             params: {
@@ -41,11 +63,12 @@
                             return `<span class="badge bg-primary">${categoria.nome}</span>`;
                         }).join(' ');
                         // Determina la classe per visibile
-                        var visibileClass = foto.visibile ? '' : 'd-none';
+                        var visibileStyle = foto.visibile ? '' : 'display: none;';
                         var fotoItem = document.createElement('div');
                         fotoItem.classList.add('col-12', 'col-md-6', 'col-lg-3', 'foto-card');
+                        fotoItem.style = visibileStyle;
                         fotoItem.innerHTML = `
-                               <div class="card ${visibileClass}" style="height: 254px">
+                           <div class="card" style="height: 254px; ">
                                 <a class="mb-4" href="/Foto/Show/${foto.id}">
                                     <button class="a-index filter-text">${foto.titolo}</button>
                                 </a>
@@ -69,5 +92,53 @@
 
 
     GetAllFoto('');
+
+    //Api per form messaggio
+    function creaMessaggio(evt){
+        evt.preventDefault();
+        var mittente = document.getElementById('MessaggioMittente').value;
+        var testo = document.getElementById('MessaggioTesto').value;
+
+        axios.post('/api/FotoWebApi/CreaMessaggio', {
+            mittente: mittente,
+            testo: testo
+
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+            document.getElementById('MessaggioMittente').value = '';
+            document.getElementById('MessaggioTesto').value = '';
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+    }
+
+
+
+    //funzione per la ricerca
+    document.addEventListener("DOMContentLoaded", function () {
+        GetAllFoto('');
+
+        var searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keyup', function () {
+            var filter = this.value.toLowerCase();
+            var fotoCards = document.querySelectorAll('.foto-card');
+
+            fotoCards.forEach(function (card) {
+                var title = card.querySelector('.filter-text').innerText.toLowerCase();
+                if (title.includes(filter)) {
+                    card.classList.remove('d-none');
+                } else {
+                    card.classList.add('d-none');
+                }
+            });
+        });
+    });
+
 </script>
 
