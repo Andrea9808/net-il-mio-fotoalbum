@@ -15,8 +15,11 @@
                 @if (User.IsInRole("ADMIN"))
                 {
                     <form asp-controller="Categoria" asp-action="Delete" asp-route-id="@categoria.Id" method="post">
-                        @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-danger btn-sm">
+                        <button type="button" class="btn btn-danger"
+                                data-bs-toggle="modal"
+                                data-bs-target="#itemModal"
+                                data-id="@categoria.Id"
+                                data-action-url="@Url.Action("Delete", "Categoria", new { id = categoria.Id })">
                             Elimina
                         </button>
                     </form>
@@ -26,6 +29,48 @@
         </div>
     }
 </div>
+
+
+<!-- MODALE DI CONFERMA -->
+<div id="itemModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Attenzione</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Sei sicuro di voler eliminare questa categoria?</p>
+                <form id="itemForm" action="" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="itemId" name="id" value="" />
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                        <button type="submit" class="btn btn-danger">Elimina</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var itemModal = document.getElementById('itemModal');
+        var itemForm = document.getElementById('itemForm');
+        var itemIdInput = document.getElementById('itemId');
+
+        itemModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+            var actionUrl = button.getAttribute('data-action-url');
+
+            itemIdInput.value = id;
+            itemForm.action = actionUrl;
+        });
+    });
+</script>
 
 <style>
     .categoria-item {
