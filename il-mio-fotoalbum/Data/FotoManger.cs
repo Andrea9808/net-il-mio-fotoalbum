@@ -5,6 +5,7 @@ namespace il_mio_fotoalbum.Data
 {
     public class FotoManger
     {
+
         //PRENDE LA LISTA DELLE FOTO DAL DB
         public static List<Foto> GetAllFoto()
         {

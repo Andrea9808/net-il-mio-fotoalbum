@@ -26,6 +26,10 @@ namespace il_mio_fotoalbum.Models
         [Column("visibile")]
         public bool Visibile { get; set; }
 
+        //Relazione con IdentityUser
+        public long? UserId { get; set; }
+        public User? User { get; set; }
+
         // * to *
         public List<Categoria>? Categorias { get; set; }
         public Foto() { }

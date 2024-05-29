@@ -1,7 +1,9 @@
 using il_mio_fotoalbum.Data;
+using il_mio_fotoalbum.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using il_mio_fotoalbum.Areas.Identity.Data;
 
 namespace il_mio_fotoalbum
 {
@@ -11,10 +13,9 @@ namespace il_mio_fotoalbum
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
             builder.Services.AddDbContext<FotoContext>();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<FotoContext>();
 

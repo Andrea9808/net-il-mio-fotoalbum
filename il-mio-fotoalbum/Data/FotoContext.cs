@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace il_mio_fotoalbum.Data
 {
-    public class FotoContext : IdentityDbContext<IdentityUser>
+    public class FotoContext : IdentityDbContext<User>
     {
         public DbSet<Foto> Fotos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
