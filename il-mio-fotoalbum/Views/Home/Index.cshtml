@@ -6,9 +6,9 @@
     <div class="container">
         <input id="searchInput" class="js_search form-control my-3" placeholder="Cerca per titolo" />
         <!-- Form Messaggio -->
-        <h4>Inviaci una tua opinione!</h4>
         <form class="form" onsubmit="creaMessaggio(event)" method="post">
             @Html.AntiForgeryToken()
+            <h4>Inviaci una tua opinione!</h4>
             <div class="mb-3">
                 <strong>Email:</strong>
                 <input id="MessaggioMittente" class="d-block w-100" />
@@ -16,7 +16,7 @@
 
             <div class="mb-3">
                 <strong>Testo:</strong>
-                <input id="MessaggioTesto" type="text" class="d-block w-100" />
+                <textarea id="MessaggioTesto" class="d-block w-100"></textarea>
             </div>
 
             <div class="text-end">
@@ -24,7 +24,7 @@
             </div>
             <!-- Modale di Successo -->
             <div id="successModal" class="modal fade" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="successModalLabel">Messaggio Inviato</h5>
@@ -85,10 +85,11 @@
                         fotoItem.classList.add('col-12', 'col-md-6', 'col-lg-3', 'foto-card');
                         fotoItem.style = visibileStyle;
                         fotoItem.innerHTML = `
-                           <div class="card" style="height: 254px; ">
-                                <a class="mb-4" href="/Foto/Show/${foto.id}">
+                               <div class="card" style="height: 254px; position: relative; ">
+                                    <a class="mb-4" href="/Foto/Show/${foto.id}" style="position: absolute; top: 20px;">
                                     <button class="a-index filter-text">${foto.titolo}</button>
                                 </a>
+                                <img style="overflow: hidden; height: 179px; object-fit: contain; border-radius: 50%;" src="${foto.imgSrc}"  />
                                 <p>${categoriasHtml}</p>
                                 <div>
                                     ${foto.visibile ? '<div class="green-dot"></div>' : '<div class="green-red"></div>'}
